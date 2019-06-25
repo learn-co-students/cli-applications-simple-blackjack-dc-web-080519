@@ -1,37 +1,62 @@
+# fluff function to start game
 def welcome
-  # code #welcome here
+  puts "Welcome to the Blackjack Table"
 end
 
+# delivers random number between 1 and 11 - called later
 def deal_card
-  # code #deal_card here
+  rand(1..11)
 end
 
-def display_card_total
-  # code #display_card_total here
+# displays current card total - called later
+def display_card_total(card_total)
+  puts "Your cards add up to #{card_total}"
 end
 
+# displays instructions - called later
 def prompt_user
-  # code #prompt_user here
+  puts "Type 'h' to hit or 's' to stay"
 end
 
+# called any time user input required
 def get_user_input
-  # code #get_user_input here
+  gets.chomp
 end
 
-def end_game
-  # code #end_game here
+# last called function in runner
+def end_game(card_total)
+  puts "Sorry, you hit #{card_total}. Thanks for playing!"
 end
 
+# deals 2 cards, shows total, and returns total as value
 def initial_round
-  # code #initial_round here
+  card_total = deal_card
+  card_total += deal_card
+  display_card_total(card_total)
+  card_total
 end
 
-def hit?
-  # code hit? here
+def hit?(card_total)
+  # get user input
+  prompt_user
+  user_input = get_user_input
+  # if user stays, return value of hand as-is
+  if user_input == "s"
+    card_total
+  # if user hits, add value of another random card
+  elsif user_input == "h"
+    card_total += deal_card
+  # if unrecognized input, error message and back to top of function
+  else
+    invalid_command
+    hit?(card_total)
+  end
+  card_total
 end
 
+# error message
 def invalid_command
-  # code invalid_command here
+  puts "Please enter a valid command"
 end
 
 #####################################################
@@ -39,6 +64,12 @@ end
 #####################################################
 
 def runner
-  # code runner here
+  welcome
+  # run #initial_round and store value in hand variable
+  hand = initial_round
+  while hand < 21
+    hand = hit?(hand)
+    display_card_total(hand)
+  end
+  end_game(hand)
 end
-    
