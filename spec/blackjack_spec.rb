@@ -125,7 +125,7 @@ describe "#runner" do
   -until- the card sum is greater than 21,
   then calls on the #end_game method" do
 
-    expect(self).to receive(:deal_card).at_least(3).times.and_return(10)
+    expect(self).to receive(:deal_card).at_least(2).times.and_return(10)
     expect(self).to receive(:get_user_input).and_return("h")
 
     expect($stdout).to receive(:puts).with("Welcome to the Blackjack Table")
